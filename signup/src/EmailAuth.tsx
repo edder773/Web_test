@@ -106,7 +106,7 @@ const EmailAuth: React.FC = () => {
 				color="primary"
 				onClick={handleSignUp}
 				className="button-auth"
-				style={{ marginTop: '400px', background: '#606C5D' }}
+				style={{ marginTop: '300px', background: '#606C5D' }}
 				disabled={!isAuthenticated}
 			>
 				회원가입

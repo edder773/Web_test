@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconButton, TextField, Button } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckIcon from '@mui/icons-material/Check';
@@ -43,6 +43,22 @@ const UserInfoForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
 	const [password1, setPassword] = useState('');
 	const [password2, setPassword2] = useState('');
 	const [invalidEmail, setInvalidEmail] = useState(false);
+	const [isWebApp, setIsWebApp] = useState(false);
+
+	useEffect(() => {
+		const mediaQuery = window.matchMedia('(display-mode: standalone)');
+		setIsWebApp(mediaQuery.matches);
+
+		const handleMediaChange = (event: MediaQueryListEvent) => {
+			setIsWebApp(event.matches);
+		};
+
+		mediaQuery.addEventListener('change', handleMediaChange);
+
+		return () => {
+			mediaQuery.removeEventListener('change', handleMediaChange);
+		};
+	}, []);
 
 	const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setName(event.target.value);
@@ -91,8 +107,9 @@ const UserInfoForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
 	const handleGoBack = () => {
 		console.log('뒤로');
 	};
+
 	return (
-		<div>
+		<div className="container-line">
 			<BackButton onGoBack={handleGoBack} />
 			<h1>회원가입</h1>
 			<h3>리디드에 오신 것을 환영합니다.</h3>
@@ -173,16 +190,33 @@ const UserInfoForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
 					}}
 				/>
 			</div>
-			<Link to={`/EmailAuth?email=${encodeURIComponent(email)}`}>
-				<Button
-					variant="contained"
-					color="primary"
-					onClick={handleSubmit}
-					className="form-button-container"
-				>
-					이메일 인증하기
-				</Button>
-			</Link>
+			{isWebApp ? (
+				<div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%' }}>
+					<Link to={`/EmailAuth?email=${encodeURIComponent(email)}`}>
+						<Button
+							variant="contained"
+							color="primary"
+							onClick={handleSubmit}
+							style={{ width: '100%' }}
+						>
+							이메일 인증하기
+						</Button>
+					</Link>
+				</div>
+			) : (
+				<div>
+					<Link to={`/EmailAuth?email=${encodeURIComponent(email)}`}>
+						<Button
+							variant="contained"
+							color="primary"
+							onClick={handleSubmit}
+							className="form-button-container"
+						>
+							이메일 인증하기
+						</Button>
+					</Link>
+				</div>
+			)}
 		</div>
 	);
 };

@@ -12,6 +12,10 @@
 	padding: 20px;
 }
 
+.container-line {
+	border: black 1px solid;
+	padding: 40px;
+}
 .form-button-container {
 	width: 100%;
 	padding: 10px 0;
