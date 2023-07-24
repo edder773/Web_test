@@ -81,10 +81,10 @@ function Profile({
 		console.log('한줄소개', profile_bio);
 		axios
 			.post('http://local:8080/signup', formData)
-			.then(response => {
+			.then((response: any) => {
 				console.log('회원가입 성공:', response.data);
 			})
-			.catch(error => {
+			.catch((error: any) => {
 				console.error('회원가입 실패:', error);
 			});
 	};

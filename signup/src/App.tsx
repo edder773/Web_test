@@ -80,10 +80,10 @@ const UserInfoForm: React.FC<{ onSubmit: (data: FormData) => void }> = ({
 
 		axios
 			.post('http://localhost:8080/email', { email })
-			.then(response => {
+			.then((response: any) => {
 				console.log('이메일이 성공적으로 보내졌습니다.');
 			})
-			.catch(error => {
+			.catch((error: any) => {
 				console.error('이메일 전송에 실패했습니다.', error);
 			});
 	};
